@@ -43,8 +43,14 @@ const TodoList: React.FC = () => {
 
   const deleteTodo = async (id: string) => {
     try {
-      await deleteDoc(doc(db, "todos", id));
-      fetchTodos();
+      const user = auth.currentUser;
+      if (user) {
+        const todoRef = doc(db, 'users', user.uid, 'todos', id);
+        await deleteDoc(todoRef);
+        fetchTodos();
+      } else {
+        console.error("User not authenticated");
+      }
     } catch (error) {
       console.error("Error deleting todo:", error);
     }
