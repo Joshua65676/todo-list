@@ -94,7 +94,7 @@ const Login: React.FC = () => {
           <Button title="Login" onPress={handleLogin} />
         )}
         <Text
-          onPress={() => navigation.navigate("Signup" as never)}
+          onPress={() => navigation.navigate("SignUp" as never)}
           className="mt-4 text-base font-medium"
         >
           Don't have an account?

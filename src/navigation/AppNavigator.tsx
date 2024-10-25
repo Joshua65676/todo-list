@@ -58,12 +58,12 @@ const AppNavigator: React.FC = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={initialRoute as keyof RootStackParamList}>
+      <Stack.Navigator initialRouteName={initialRoute as keyof RootStackParamList} screenOptions={{ headerTitleAlign: 'center', headerTitleStyle:{fontWeight: 'bold'}}}>
         <Stack.Screen name="Home" component={Home} options={{headerShown: false}} />
-        <Stack.Screen name="LogIn" component={Login} />
-        <Stack.Screen name="SignUp" component={Signup} />
-        <Stack.Screen name="TodoList" component={TodoList}  />
-        <Stack.Screen name="EditTodo" component={EditTodo} options={{headerShown: false}} />
+        <Stack.Screen name="LogIn" component={Login} options={{headerTitle: () => null}} />
+        <Stack.Screen name="SignUp" component={Signup} options={{headerTitle: () => null}} />
+        <Stack.Screen name="TodoList" component={TodoList} options={{headerLeft: () => null, headerTitle: 'Todo List'}} />
+        <Stack.Screen name="EditTodo" component={EditTodo} options={{headerTitle: 'Edit Todo'}} />
       </Stack.Navigator>
     </NavigationContainer>
   );

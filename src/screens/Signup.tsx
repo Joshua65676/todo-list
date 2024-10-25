@@ -95,7 +95,7 @@ const Signup: React.FC = () => {
           <Button title="Sign Up" onPress={handleSignup} />
         )}
         <Text
-          onPress={() => navigation.navigate("Login" as never)}
+          onPress={() => navigation.navigate("LogIn" as never)}
           className="mt-4 text-base font-medium"
         >
           Already have an account?
