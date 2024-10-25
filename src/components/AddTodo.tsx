@@ -17,15 +17,15 @@ const AddTodo: React.FC<{ onAdd: () => void }> = ({ onAdd }) => {
   };
 
   return (
-    <View className="flex flex-row gap-2 p-4 mb-4">
+    <View className="flex flex-col w-full gap-2 mb-4">
       <TextInput
-        placeholder="New Task"
+        placeholder="Add Task..."
         value={task}
         onChangeText={setTask}
-        className="flex w-64 h-12.5 pl-5 border-2 rounded shadow-sm focus:outline-none focus:ring focus:ring-blue-700"
+        className="flex w-full h-16 pl-5 mb-10 border-2 rounded-lg shadow-sm focus:outline-none focus:ring focus:ring-blue-700"
       />
-      <Pressable className="px-[20] py-[12] rounded bg-blue-600 shadow-sm" onPress={handleAddTodo}>
-        <Text className="font-bold text-white">Add</Text>
+      <Pressable className="px-[20] py-[12] rounded-lg bg-blue-400 shadow-sm w-full" onPress={handleAddTodo}>
+        <Text className="font-bold text-center text-white uppercase">Create</Text>
       </Pressable>
     </View>
   );

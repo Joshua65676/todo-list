@@ -23,7 +23,7 @@ const TodoItem: React.FC<TodoItemProps> = ({
   const navigation = useNavigation<NavigationProp<any>>();
 
   return (
-    <View className="flex-row items-center justify-between p-2 border">
+    <View className="flex-row items-center justify-between w-full p-2 mt-3 border rounded-lg">
       <View className="flex-row gap-1 p-1">
         <Pressable onPress={() => onToggleComplete(id)} className="pt-[2]">
           <Icon
