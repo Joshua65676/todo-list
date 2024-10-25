@@ -8,6 +8,7 @@ import {
   Pressable,
 } from "react-native";
 import { auth, db } from "../firebaseConfig";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { useNavigation } from "@react-navigation/native";
@@ -25,14 +26,20 @@ const Login: React.FC = () => {
     setIsLoading(true);
     setError("");
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       const user = userCredential.user;
-      const userDoc = await getDoc(doc(db, 'users', user.uid));
+      const userToken = await userCredential.user.getIdToken();
+      await AsyncStorage.setItem("userToken", userToken);
+      const userDoc = await getDoc(doc(db, "users", user.uid));
       const userName = userDoc.data()?.userName;
       if (userName) {
-        navigation.navigate('TodoList', { userName });
+        navigation.navigate("TodoList", { userName });
       } else {
-        setError('Username not found');
+        setError("Username not found");
       }
     } catch (error: any) {
       if (error.code === "auth/invalid-email") {
@@ -49,7 +56,7 @@ const Login: React.FC = () => {
 
   return (
     <View className="items-center justify-center flex-1 p-4">
-      <View className="w-full max-w-md p-8 space-y-6 bg-white rounded shadow-md">
+      <View className="w-full max-w-md p-8 space-y-6">
         <Text className="text-2xl font-bold text-center">Log In</Text>
         <TextInput
           placeholder="Email"
@@ -78,7 +85,11 @@ const Login: React.FC = () => {
         </View>
         {error ? <Text className="mb-4 text-red-500">{error}</Text> : null}
         {isLoading ? (
-          <ActivityIndicator size="large" color="#0000ff" />
+          <View
+            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+          >
+            <ActivityIndicator size="large" color="#0000ff" />
+          </View>
         ) : (
           <Button title="Login" onPress={handleLogin} />
         )}

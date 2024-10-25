@@ -51,7 +51,7 @@ const Signup: React.FC = () => {
 
   return (
     <View className="items-center justify-center flex-1 p-4">
-      <View className="w-full max-w-md p-8 space-y-6 bg-white rounded shadow-md">
+      <View className="w-full max-w-md p-8 space-y-6 ">
         <Text className="text-2xl font-bold text-center">Sign Up</Text>
         <TextInput
           placeholder="Username"
@@ -86,7 +86,11 @@ const Signup: React.FC = () => {
         </View>
         {error ? <Text className="mb-4 text-red-500">{error}</Text> : null}
         {isLoading ? (
-          <ActivityIndicator size="large" color="#0000ff" />
+          <View
+            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+          >
+            <ActivityIndicator size="large" color="#0000ff" />
+          </View>
         ) : (
           <Button title="Sign Up" onPress={handleSignup} />
         )}

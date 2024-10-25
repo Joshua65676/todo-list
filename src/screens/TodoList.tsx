@@ -6,8 +6,10 @@ import {
   Text,
   Modal,
   Pressable,
+  Alert,
 } from "react-native";
 import { db, auth } from "../firebaseConfig";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   collection,
   getDocs,
@@ -16,9 +18,10 @@ import {
   doc,
   DocumentData,
 } from "firebase/firestore";
+import { signOut } from "firebase/auth";
 import AddTodo from "../components/AddTodo";
 import TodoItem from "../components/TodoItem";
-import { useRoute } from "@react-navigation/native";
+import { useRoute, useNavigation } from "@react-navigation/native";
 
 interface Todo {
   id: string;
@@ -31,6 +34,7 @@ const TodoList: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
   const route = useRoute();
+  const navigation = useNavigation();
   const { userName } = route.params as { userName: string };
 
   const fetchTodos = async () => {
@@ -47,6 +51,12 @@ const TodoList: React.FC = () => {
       setTodos(todosData);
       setIsLoading(false);
     }
+  };
+
+  const handleLogout = async () => {
+    await signOut(auth);
+    await AsyncStorage.removeItem("userToken");
+    navigation.navigate("LogIn");
   };
 
   const deleteTodo = async (id: string) => {
@@ -69,7 +79,7 @@ const TodoList: React.FC = () => {
     if (user) {
       const todo = todos.find((todo) => todo.id === id);
       if (todo) {
-        const todoRef = doc(db, 'users', user.uid, 'todos', id);
+        const todoRef = doc(db, "users", user.uid, "todos", id);
         await updateDoc(todoRef, { completed: !todo.completed });
         fetchTodos();
       }
@@ -93,15 +103,33 @@ const TodoList: React.FC = () => {
   }, []);
 
   if (isLoading) {
-    return <ActivityIndicator size="large" color="#0000ff" />;
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <ActivityIndicator size="large" color="#0000ff" />
+    </View>;
   }
 
   return (
     <View className="max-w-md mx-auto">
       <View className="p-4">
-        <View className="pl-5">
-          <Text className="mb-1 font-medium text-md">Today</Text>
-          <Text className="mb-4 text-xl font-bold">{getCurrentDate()}</Text>
+        <View className="flex flex-row justify-between">
+          <View className="pl-5">
+            <Text className="mb-1 font-medium text-md">Today</Text>
+            <Text className="mb-4 text-xl font-bold">{getCurrentDate()}</Text>
+          </View>
+          <View>
+            <Pressable className="" onPress={() => {
+              Alert.alert(
+                 'Alert',
+                 'You are trying to Log out, Would you like to continue?',
+                [
+                  { text: 'Cancel', onPress: () => null },
+                  { text: 'Ok', onPress: () => handleLogout()}
+                ]
+              );
+            }}>
+              <Text>LogOut</Text>
+            </Pressable>
+          </View>
         </View>
         <View className="h-32 p-4 pl-5 mt-3 bg-blue-400 rounded-xl">
           <Text className="mb-2 text-xl font-bold text-white">
@@ -130,7 +158,7 @@ const TodoList: React.FC = () => {
           />
         </View>
         <Pressable
-          className="absolute bottom-0 w-16 p-4 bg-blue-400 rounded-full shadow-lg left-[315px]"
+          className="absolute -bottom-10  w-16 p-4 bg-blue-400 rounded-full shadow-lg left-[315px]"
           onPress={() => setModalVisible(true)}
         >
           <Text className="pl-2 text-2xl text-white ">+</Text>
