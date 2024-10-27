@@ -3,11 +3,11 @@
     "name": "todo-list",
     "slug": "todo-list",
     "version": "1.0.0",
-    "orientation": "portrait",
+    "orientation": "default",
     "icon": "./assets/todo.icon.png.jpg",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/todo_splash.png",
+      "image": "./assets/splash2.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -16,7 +16,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/todo_splash.png",
+        "foregroundImage": "./assets/splash1.png",
         "backgroundColor": "#ffffff"
       }
     },
