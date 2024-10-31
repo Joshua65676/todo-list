@@ -8,6 +8,7 @@ import Login from "../screens/Login";
 import Signup from "../screens/Signup";
 import TodoList from "../screens/TodoList";
 import EditTodo from "../components/EditTodo";
+import AddTodo from "../components/AddTodo";
 import { auth } from "../firebaseConfig";
 
 type RootStackParamList = {
@@ -15,6 +16,7 @@ type RootStackParamList = {
   LogIn: undefined;
   SignUp: undefined;
   TodoList: { userName: string };
+  AddTodo: undefined;
   EditTodo: undefined;
 };
 
@@ -89,6 +91,11 @@ const AppNavigator: React.FC = () => {
           name="EditTodo"
           component={EditTodo}
           options={{ headerTitle: "Edit Todo" }}
+        />
+        <Stack.Screen
+          name="AddTodo"
+          component={AddTodo}
+          options={{ headerTitle: "Add Todo" }}
         />
       </Stack.Navigator>
     </NavigationContainer>

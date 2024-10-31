@@ -1,9 +1,10 @@
-import { View, Text, Pressable, Alert } from "react-native";
+import { View, Text, Pressable, Alert, StyleSheet } from "react-native";
 import React from "react";
 import { signOut } from "firebase/auth";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { auth } from "../firebaseConfig";
 import { useRoute, useNavigation } from "@react-navigation/native";
+import Icon from "react-native-vector-icons/Ionicons";
 
 const Header: React.FC = () => {
   const route = useRoute();
@@ -28,13 +29,14 @@ const Header: React.FC = () => {
 
   return (
     <View className="p-4">
-      <View className="flex flex-row justify-between">
+      <View className="flex flex-row justify-between pr-5">
         <View className="pl-5">
           <Text className="mb-1 font-medium text-md">Today</Text>
           <Text className="mb-4 text-xl font-bold">{getCurrentDate()}</Text>
         </View>
         <View>
           <Pressable
+            style={styles.button}
             onPress={() => {
               Alert.alert(
                 "Alert",
@@ -46,7 +48,8 @@ const Header: React.FC = () => {
               );
             }}
           >
-            <Text>LogOut</Text>
+            <Icon name="log-out-outline" size={24} color="white" />
+            <Text style={styles.text}>Sign Out</Text>
           </Pressable>
         </View>
       </View>
@@ -61,5 +64,25 @@ const Header: React.FC = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  button: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#f00",
+    padding: 10,
+    borderRadius: 5,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 2,
+  },
+  text: {
+    color: "white",
+    marginLeft: 5,
+    fontWeight: "bold",
+  },
+});
 
 export default Header;
