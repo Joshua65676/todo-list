@@ -31,7 +31,7 @@ const Header: React.FC = () => {
     <View className="p-4">
       <View className="flex flex-row justify-between pr-5">
         <View className="pl-5">
-          <Text className="mb-1 font-medium text-md">Today</Text>
+          <Text className="mb-1 font-medium text-blue-500 text-md">Today</Text>
           <Text className="mb-4 text-xl font-bold">{getCurrentDate()}</Text>
         </View>
         <View>
